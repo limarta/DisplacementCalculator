@@ -53,12 +53,12 @@ public class UwpTest : MonoBehaviour
     {
         Vector3 pos = Camera.main.transform.position;
         m_TextComponent = gameObject.GetComponent<TMP_Text>();
-        m_TextComponent.text = "State of writer: " + writer + "\n Camera pos" + 
-                                pos +
+        m_TextComponent.text = "State of writer: " + writer + "\n Camera pos" +
+                                "(" + pos.x + ", " + pos.y + ", " + pos.z + ")"+
                                "\nNumber of updates: " + updateCount;
         if(writer != null)
         {
-            writer.WriteLine(pos);
+            writer.WriteLine("(" + pos.x + ", " + pos.y + ", " + pos.z + ")");
             updateCount += 1;
         }
         else

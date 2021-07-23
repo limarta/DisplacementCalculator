@@ -24,7 +24,7 @@ public class DistanceMeasurer : MonoBehaviour
         prevPos = transform.position;
         m_TextComponent = gameObject.GetComponent<TMP_Text>();
         m_TextComponent.text = "Initial Position: " + initialPosition + "\n" +
-                                "Current Position: " + transform.position + "\n" +
+                                "Current Position: (" + transform.position.x + ", " + transform.position.y + ", " + transform.position.z  + ")\n" +
                                 "Displacement: " + (transform.position - initialPosition).magnitude + "\n" +
                                 "Total Distance: " + totalDistance;
     } 
