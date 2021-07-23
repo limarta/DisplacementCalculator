@@ -38,27 +38,27 @@ public class UwpTest : MonoBehaviour
 #endif
 #if !UNITY_EDITOR
         StreamSocket clientSocket = new StreamSocket();
-        string MyLaptop = "18.27.124.187";
-        string CrapLaptop = "18.27.124.131";
-        await clientSocket.ConnectAsync(new HostName(CrapLaptop), "8080");
+        string MyLaptop = "18.27.124.131";
+        await clientSocket.ConnectAsync(new HostName(MyLaptop), "8080");
         writer = new StreamWriter(clientSocket.OutputStream.AsStreamForWrite());
         writer.AutoFlush = true;
         while (true) {
             
         }
-        //writer.WriteLine("From the hololens!");
 #endif
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 pos = Camera.main.transform.position;
         m_TextComponent = gameObject.GetComponent<TMP_Text>();
-        m_TextComponent.text = "State of writer: " + writer + "\n Current position: " + transform.position +
+        m_TextComponent.text = "State of writer: " + writer + "\n Camera pos" + 
+                                pos +
                                "\nNumber of updates: " + updateCount;
         if(writer != null)
         {
-            writer.WriteLine(""+transform.position);
+            writer.WriteLine(pos);
             updateCount += 1;
         }
         else

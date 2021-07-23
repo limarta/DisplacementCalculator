@@ -19,6 +19,7 @@ public class DistanceMeasurer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Vector3 pos = Camera.main.transform.position;
         totalDistance += (transform.position - prevPos).magnitude;
         prevPos = transform.position;
         m_TextComponent = gameObject.GetComponent<TMP_Text>();
