@@ -43,7 +43,10 @@ public class UwpTest : MonoBehaviour
         await clientSocket.ConnectAsync(new HostName(CrapLaptop), "8080");
         writer = new StreamWriter(clientSocket.OutputStream.AsStreamForWrite());
         writer.AutoFlush = true;
-        await writer.WriteLineAsync("From the hololens!");
+        while (true) {
+            
+        }
+        //writer.WriteLine("From the hololens!");
 #endif
     }
 
