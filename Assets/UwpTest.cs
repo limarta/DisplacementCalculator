@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +10,6 @@ using UnityEngine.Rendering;
 #if !UNITY_EDITOR
 using Windows.Networking;
 using Windows.Networking.Sockets;
-using System;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
@@ -21,9 +21,14 @@ public class UwpTest : MonoBehaviour
     private StreamWriter writer;
     private int updateCount;
     private TMP_Text m_TextComponent;
+    [SerializeField] private string IP;
+    [SerializeField] private string port;
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(IP);
+        Debug.Log(port);
         updateCount = 0;
         Debug.Log("Starting thread");
         Thread t = new Thread(new ThreadStart(ConnectSocket));
@@ -38,8 +43,7 @@ public class UwpTest : MonoBehaviour
 #endif
 #if !UNITY_EDITOR
         StreamSocket clientSocket = new StreamSocket();
-        string MyLaptop = "18.27.124.131";
-        await clientSocket.ConnectAsync(new HostName(MyLaptop), "8080");
+        await clientSocket.ConnectAsync(new HostName(IP), port);
         writer = new StreamWriter(clientSocket.OutputStream.AsStreamForWrite());
         writer.AutoFlush = true;
         while (true) {
