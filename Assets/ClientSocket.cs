@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using TMPro;
 using System.IO;
@@ -18,22 +19,26 @@ using Windows.Foundation.Collections;
 
 public class ClientSocket : MonoBehaviour
 {
-    private StreamWriter writer;
     private bool threadStarted = false;
     private int retryState = -1;
     private string exceptionMsg = "No problem";
     private TMP_Text textComp;
+
+    private StreamWriter writer;
+    private ConcurrentQueue<String> writerQueue;
     [SerializeField] private string IP;
     [SerializeField] private string port;
     [SerializeField] private bool retryConnection;
 
     public StreamWriter Writer => writer;
+    public ConcurrentQueue<String> WriterQueue => writerQueue;
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("(IP, port) = (" + IP + ", " + port + ")");
         textComp = gameObject.GetComponent<TMP_Text>();
+        writerQueue = new ConcurrentQueue<string>();
         Thread t = new Thread(new ThreadStart(ConnectToServer));
         t.Start();
     }
@@ -69,7 +74,15 @@ public class ClientSocket : MonoBehaviour
                 throw new NullReferenceException("Writer not established despite connecting");
             }
             writer.AutoFlush = true;
-            while (true) {}
+
+
+            while (true) {
+                if(!writerQueue.IsEmpty) {
+                    string output;
+                    writerQueue.TryDequeue(out output);
+                    writer.Write(output);
+                }
+            }
         }
         catch(Exception exception) {
             exceptionMsg = "Error thrown: " + exception.Message + ". Now retrying.";
@@ -81,6 +94,7 @@ public class ClientSocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        writerQueue.Enqueue("" + Camera.main.transform.position);
         if(writer != null)
         {
             textComp.text = "Writer established\nThreadStarted=" + threadStarted + "\nretryState=" + retryState + "\n" + exceptionMsg;
@@ -91,7 +105,5 @@ public class ClientSocket : MonoBehaviour
             textComp.text = "Writer NOT established\nThreadStarted=" + threadStarted + "\nretryState=" + retryState + "\n" + exceptionMsg;
             Debug.Log("Writer not established");
         }
-
-
     }
 }

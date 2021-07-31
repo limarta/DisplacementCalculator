@@ -60,6 +60,7 @@
     <Compile Include="Assets\UwpTest.cs" />
     <Compile Include="Assets\DistanceListener.cs" />
     <Compile Include="Assets\ClientSocket.cs" />
+    <Compile Include="Assets\HDP.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
