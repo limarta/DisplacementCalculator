@@ -60,15 +60,24 @@ public class UwpTest : MonoBehaviour
         m_TextComponent.text = "State of writer: " + writer + "\n Camera pos" +
                                 "(" + pos.x + ", " + pos.y + ", " + pos.z + ")"+
                                "\nNumber of updates: " + updateCount;
+        double time = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        time /= 1000;
+        string output = time.ToString("##########.000") + ", " + 
+                        pos.x.ToString("##.0000000") + ", " +
+                        pos.y.ToString("##.0000000") + ", " +
+                        pos.z.ToString("##.0000000");
+        output = output.PadRight(53);
+
         if(writer != null)
         {
-            writer.WriteLine("(" + pos.x + ", " + pos.y + ", " + pos.z + ")");
+            writer.Write(output);
             updateCount += 1;
         }
         else
         {
+            Debug.Log(output);
             Debug.Log("Writer not yet established");
         }
-        
+
     }
 }
