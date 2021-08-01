@@ -558,7 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf4ad19b40c5e64d9bf44f84c7078c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IP: 18.27.127.24
+  ip: 18.27.127.24
   port: 8080
   retryConnection: 1
 --- !u!23 &1112744199
@@ -633,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607826fb1c3e9f04dad14d79302066c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _client: {fileID: 1112744198}
 --- !u!1 &1519363204
 GameObject:
   m_ObjectHideFlags: 0

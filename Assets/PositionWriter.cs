@@ -7,14 +7,12 @@ using System;
 public class PositionWriter : MonoBehaviour
 {
     private TMP_Text _textComponent;
-    private ClientSocket _client;
+    [SerializeField] private ClientSocket _client;
 
     // Start is called before the first frame update
     void Start()
     {
         _textComponent = gameObject.GetComponent<TMP_Text>();
-        _client = gameObject.GetComponent<ClientSocket>();
-
     }
 
     // Update is called once per frame

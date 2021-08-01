@@ -26,17 +26,18 @@ public class ClientSocket : MonoBehaviour
 
     private StreamWriter writer;
     private ConcurrentQueue<String> writerQueue;
-    [SerializeField] private string IP;
+    [SerializeField] private string ip;
     [SerializeField] private string port;
     [SerializeField] private bool retryConnection;
 
+    public string IP => ip; 
     public StreamWriter Writer => writer;
     public ConcurrentQueue<String> WriterQueue => writerQueue;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("(IP, port) = (" + IP + ", " + port + ")");
+        Debug.Log("(ip, port) = (" + ip + ", " + port + ")");
         textComp = gameObject.GetComponent<TMP_Text>();
         writerQueue = new ConcurrentQueue<string>();
         Thread t = new Thread(new ThreadStart(ConnectToServer));
@@ -59,14 +60,14 @@ public class ClientSocket : MonoBehaviour
                 var cts = new CancellationTokenSource();
                 cts.CancelAfter(5000);
                 
-                var connectAsync = clientSocket.ConnectAsync(new HostName(IP), port);
+                var connectAsync = clientSocket.ConnectAsync(new HostName(ip), port);
                 var connectTask = connectAsync.AsTask(cts.Token);
                 await connectTask;
                 writer = new StreamWriter(clientSocket.OutputStream.AsStreamForWrite());
             }
             else {
                 retryState = 0;
-                await clientSocket.ConnectAsync(new HostName(IP), port);
+                await clientSocket.ConnectAsync(new HostName(ip), port);
                 writer = new StreamWriter(clientSocket.OutputStream.AsStreamForWrite());
             }
             
