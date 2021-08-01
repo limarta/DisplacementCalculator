@@ -94,7 +94,7 @@ public class ClientSocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        writerQueue.Enqueue("" + Camera.main.transform.position);
+        //writerQueue.Enqueue("" + Camera.main.transform.position);
         if(writer != null)
         {
             textComp.text = "Writer established\nThreadStarted=" + threadStarted + "\nretryState=" + retryState + "\n" + exceptionMsg;
