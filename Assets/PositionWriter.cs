@@ -29,6 +29,31 @@ public class PositionWriter : MonoBehaviour
                             pos.z.ToString("##.0000000");
             output = output.PadRight(53);
             _client.WriterQueue.Enqueue(output);
-        } 
+        }
+        
+        string text = "";
+        if (_client.Reader != null)
+        {
+            text += "\nWrite established";
+        }
+
+        if (_client.Writer == null)
+        {
+            text += "\nWriter not established";
+        }
+        else
+        {
+            text += "\nWriter established";
+        }
+        if (_client.Reader != null)
+        {
+            text += "\nReader established";
+        }
+        else
+        {
+            text += "\nReader not established";
+        }
+
+        _textComponent.text = text;
     }
 }
