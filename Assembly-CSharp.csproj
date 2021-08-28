@@ -56,12 +56,13 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ClientSocket.cs" />
+    <Compile Include="Assets\HDP.cs" />
     <Compile Include="Assets\DistanceMeasurer.cs" />
     <Compile Include="Assets\UwpTest.cs" />
     <Compile Include="Assets\DistanceListener.cs" />
-    <Compile Include="Assets\ClientSocket.cs" />
-    <Compile Include="Assets\HDP.cs" />
     <Compile Include="Assets\PositionWriter.cs" />
+    <Compile Include="Assets\PositionListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -30,30 +30,5 @@ public class PositionWriter : MonoBehaviour
             output = output.PadRight(53);
             _client.WriterQueue.Enqueue(output);
         }
-        
-        string text = "";
-        if (_client.Reader != null)
-        {
-            text += "\nWrite established";
-        }
-
-        if (_client.Writer == null)
-        {
-            text += "\nWriter not established";
-        }
-        else
-        {
-            text += "\nWriter established";
-        }
-        if (_client.Reader != null)
-        {
-            text += "\nReader established";
-        }
-        else
-        {
-            text += "\nReader not established";
-        }
-
-        _textComponent.text = text;
     }
 }

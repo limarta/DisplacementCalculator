@@ -22,7 +22,9 @@ public class ClientSocket : MonoBehaviour
 {
     private int retryState = -1;
     private string exceptionMsg = "No problem";
-    private string readMsg = "Nothing yet";
+    private string msgReceived = "Nothing yet";
+    private int msgLength = -1;
+    private int bytesRead = -1;
     private TMP_Text textComp;
 
     private StreamWriter writer;
@@ -46,6 +48,7 @@ public class ClientSocket : MonoBehaviour
         Debug.Log("(ip, port) = (" + ip + ", " + port + ")");
         textComp = gameObject.GetComponent<TMP_Text>();
         writerQueue = new ConcurrentQueue<string>();
+        readerQueue = new ConcurrentQueue<string>();
         Thread t = new Thread(new ThreadStart(ConnectToServer));
         t.Start();
     }
@@ -111,7 +114,9 @@ public class ClientSocket : MonoBehaviour
         string text = "retryState=" + retryState + "\n" + exceptionMsg;
         if(writer != null && reader != null)
         {
-            textComp.text = "Streams established\nRead message: " + readMsg + "\n" + text + DateTimeOffset.Now.ToUnixTimeSeconds();
+            textComp.text = "Streams established\nMessage length by stream:" + bytesRead + 
+                "\nMessage Length:" + msgLength + "\nmsgReceived" 
+                + msgReceived +"\nReader:" + (Reader == reader) + "\n"+ text + DateTimeOffset.Now.ToUnixTimeSeconds();
             Debug.Log("Writer established ");
         }
         else if(writer == null || reader == null)
@@ -133,9 +138,27 @@ public class ClientSocket : MonoBehaviour
     {
         while (true)
         {
-            char[] size_arr = new char[8];
-            await reader.ReadAsync(size_arr, 0, 8);
-            readMsg = new string(size_arr);
+            try
+            {
+                char[] size_arr = new char[8];
+                bytesRead = await reader.ReadAsync(size_arr, 0, 8);
+                string msgLengthAsString = new string(size_arr);
+
+                if (bytesRead == 8)
+                {
+                    msgLength = Int32.Parse(msgLengthAsString);
+                    char[] msg_arr = new char[msgLength];
+                    Thread.Sleep(1);
+                    bytesRead = await reader.ReadAsync(msg_arr, 0, msgLength);
+                    msgReceived = new string(msg_arr);
+                    readerQueue.Enqueue(msgReceived);
+                }
+
+            }
+            catch
+            {
+
+            }
         } 
     }
   }
