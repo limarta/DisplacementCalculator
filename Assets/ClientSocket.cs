@@ -111,8 +111,7 @@ public class ClientSocket : MonoBehaviour
         string text = "retryState=" + retryState + "\n" + exceptionMsg;
         if(writer != null && reader != null)
         {
-            //textComp.text = "Streams established\nRead message: " + readMsg +"\n" + text + DateTimeOffset.Now.ToUnixTimeSeconds();
-            textComp.text = readMsg;
+            textComp.text = "Streams established\nRead message: " + readMsg + "\n" + text + DateTimeOffset.Now.ToUnixTimeSeconds();
             Debug.Log("Writer established ");
         }
         else if(writer == null || reader == null)
@@ -136,11 +135,7 @@ public class ClientSocket : MonoBehaviour
         {
             char[] size_arr = new char[8];
             await reader.ReadAsync(size_arr, 0, 8);
-            //int msgLength = Int32.Parse(new string(size_arr));
-            //char[] msg_arr = new char[msgLength];
-            //await reader.ReadAsync(msg_arr, 0, msgLength);
-
-            readerQueue.Enqueue(readMsg);
+            readMsg = new string(size_arr);
         } 
     }
   }
