@@ -8,7 +8,7 @@ using UnityEngine;
 public class PositionListener : MonoBehaviour
 {
     private TMP_Text _textComponent;
-    private readonly Regex rx = new Regex(@"\(\s*(?<x>\d+\.\d+)\s*,\s*(?<y>\d+\.\d+)\s*,\s*(?<z>\d+\.\d+)\s*\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private readonly Regex rx = new Regex(@"\(\s*(?<x>-?\d+\.\d+)\s*,\s*(?<y>-?\d+\.\d+)\s*,\s*(?<z>-\d+\.\d+)\s*\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private Vector3 currentPos;
     private bool matched;
     [SerializeField] private ClientSocket _client;
